@@ -8,27 +8,16 @@ export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
   @Post()
-  create(@Body() createChatDto: CreateChatDto) {
-    return this.chatService.create(createChatDto);
+  async sendMessage(
+    @Body('roomId') roomId: number,
+    @Body('senderId') senderId: number,
+    @Body('message') message: string,
+  ) {
+    return this.chatService.sendMessage(roomId, senderId, message);
   }
 
-  @Get()
-  findAll() {
-    return this.chatService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.chatService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateChatDto: UpdateChatDto) {
-    return this.chatService.update(+id, updateChatDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.chatService.remove(+id);
+  @Get(':roomId')
+  async getMessagesByRoom(@Param('roomId') roomId: number) {
+    return this.chatService.getMessagesByRoom(roomId);
   }
 }

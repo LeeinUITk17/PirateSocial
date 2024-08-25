@@ -8,27 +8,15 @@ export class RoomController {
   constructor(private readonly roomService: RoomService) {}
 
   @Post()
-  create(@Body() createRoomDto: CreateRoomDto) {
-    return this.roomService.create(createRoomDto);
+  async createRoom(@Body('name') name: string) {
+    return this.roomService.createRoom(name);
   }
 
-  @Get()
-  findAll() {
-    return this.roomService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.roomService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
-    return this.roomService.update(+id, updateRoomDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.roomService.remove(+id);
+  @Post(':roomId/users/:userId')
+  async addUserToRoom(
+    @Param('roomId') roomId: number,
+    @Param('userId') userId: number,
+  ) {
+    return this.roomService.addUserToRoom(roomId, userId);
   }
 }

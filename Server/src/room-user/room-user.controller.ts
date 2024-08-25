@@ -6,29 +6,29 @@ import { UpdateRoomUserDto } from './dto/update-room-user.dto';
 @Controller('room-user')
 export class RoomUserController {
   constructor(private readonly roomUserService: RoomUserService) {}
-
-  @Post()
-  create(@Body() createRoomUserDto: CreateRoomUserDto) {
-    return this.roomUserService.create(createRoomUserDto);
+  @Post(':roomId/users/:userId')
+  async addUserToRoom(
+    @Param('roomId') roomId: number,
+    @Param('userId') userId: number,
+  ) {
+    return this.roomUserService.addUserToRoom(roomId, userId);
   }
 
-  @Get()
-  findAll() {
-    return this.roomUserService.findAll();
+  @Delete(':roomId/users/:userId')
+  async removeUserFromRoom(
+    @Param('roomId') roomId: number,
+    @Param('userId') userId: number,
+  ) {
+    return this.roomUserService.removeUserFromRoom(roomId, userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.roomUserService.findOne(+id);
+  @Get('rooms/:roomId/users')
+  async getUsersByRoom(@Param('roomId') roomId: number) {
+    return this.roomUserService.getUsersByRoom(roomId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoomUserDto: UpdateRoomUserDto) {
-    return this.roomUserService.update(+id, updateRoomUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.roomUserService.remove(+id);
+  @Get('users/:userId/rooms')
+  async getRoomsByUser(@Param('userId') userId: number) {
+    return this.roomUserService.getRoomsByUser(userId);
   }
 }

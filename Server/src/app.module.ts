@@ -7,11 +7,11 @@ import { ChatModule } from './chat/chat.module';
 import { RoomModule } from './room/room.module';
 import { RoomUserModule } from './room-user/room-user.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { ChatGateway } from './Gateway/chat.gateway';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [UserModule, ChatModule, RoomModule, RoomUserModule,PrismaModule],
+  imports: [UserModule, ChatModule, RoomModule, RoomUserModule,PrismaModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService,PrismaService,ChatGateway],
+  providers: [AppService,PrismaService],
 })
 export class AppModule {}
